@@ -2,7 +2,31 @@ from keras.datasets import mnist
 import matplotlib.pyplot as plt 
 import numpy as np 
 import keras
+#按照顺序连接的神经网络模型
+from keras.models import Sequential
+#Dense全连接层 Dropout扔掉增加鲁棒性增快速度 Flatten压缩纬度
+from keras.layers import Dense, Dropout, Flatten
+#二维卷积  按最大值池化
+from keras.layers import Conv2D, MaxPooling2D
 
+#构建序列式神经网络模型
+model = Sequential()
+#添加第一层：卷积层 32filters 卷积核大小， 激活函数  尺寸只有第一次要管，后面自动
+model.add(Conv2D(32, kernel_size=(3,3), activation='relu', input_shape=input_shape))
+#再添加一层卷积层
+model.add(Conv2D(64, (3,3), activation=(2,2)))
+#池化,缩小图片
+model.add(MaxPooling2D(pool_size=(2,2)))
+#随机丢掉一点数据
+model.add(Dropout(0.25))
+#降低维度压扁成一维
+model.add(Flatten())
+#全连接层,人为设定128
+model.add(Dense(128, activation='relu'))
+#随机丢掉一点数据
+model.add(Dropout(0.5))
+#最终全连接到输出层
+model.add(Dense(num_classes,activation='relu'))
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 img_rows, img_cols = 28, 28
