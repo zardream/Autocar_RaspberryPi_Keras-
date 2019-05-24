@@ -11,3 +11,5 @@ import matplotlib.pyplot as plt
 plt.figure()
 plt.imshow(x_train[30], cmap='gray')
 plt.show()
+
+print(x_train.shape)
