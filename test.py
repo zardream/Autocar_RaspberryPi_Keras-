@@ -7,7 +7,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 #二维卷积  按最大值池化
 from keras.layers import Conv2D, MaxPooling2D
-
+#引入TensorBoard 通过可视化的直观图来观察
+from keras.callbacks import TensorBoard
 
 # step1 #
 #数据读入以及预处理
@@ -72,6 +73,15 @@ model.add(Dense(num_classes,activation='softmax'))
 model.compile(loss=keras.losses.categorical_crossentropy,
 			optimizer=keras.optimizers.Adadelta(),#Adadelta是自适应的学习速率，不需要人为设定
 			metrics=['accuracy'])
+#打开TensorBoard便于人们观察
+tb = TensorBoard(log_dir='./logs',	#将数据存放到相同路径下的logs里
+				 histogram_freq=1,	#按什么频率来计算直方图
+				 batch_size=128, 	#用多少数据来计算直方图
+				 write_graph=True,	#画神经网络结构图
+				 write_grads=False,	#画梯度的图
+				 write_images=False	#把训练每个阶段的图画出来
+				 )
+callbacks = [tb]
 
 
 # step6 #
@@ -80,7 +90,9 @@ model.fit(x_train, y_train,
 	batch_size=128, #梯度下降的时候每个batch包含的样本数    理论上选的越大越好，但比较浪费资源和时间，实际选一个小样本数就可以了，确定好了其他参数再用大batch
 	epochs=12,		#训练多少轮结束
 	verbose=1,		#是否显示训练的时候日志信息
-	validation_data=(x_test,y_test))	#用来验证的数据集
+	validation_data=(x_test,y_test),#用来验证的数据集
+	callbacks=callbacks#回调，此处使用tensorboard
+	)	
 
 
 # step7 #
