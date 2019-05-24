@@ -27,6 +27,14 @@ model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 #最终全连接到输出层
 model.add(Dense(num_classes,activation='relu'))
+
+
+#编译神经网络模型
+#loss损失函数 optimizer优化器的选择 metrics训练指标列表
+model.compile(loss=keras.losses.categorical_crossentropy,
+			optimizer=keras.optimizers.Adadelta(),
+			metrics=['accuracy'])
+
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 img_rows, img_cols = 28, 28
