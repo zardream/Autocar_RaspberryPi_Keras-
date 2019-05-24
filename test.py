@@ -38,6 +38,15 @@ model.compile(loss=keras.losses.categorical_crossentropy,
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 img_rows, img_cols = 28, 28
+
+#训练神经网络模型
+model.fit(x_train, y_train,
+	batch_size=128, #梯度下降的时候每个batch包含的样本数
+	epochs=12,		#训练多少轮结束
+	verbose=1,		#是否显示训练的时候日志信息
+	validation_data=(x_test,y_test))	#用来验证的数据集
+
+
 #reshape来自numpy，下面部分是为了转换数据类型并改变纬度，最后一个1是为了方便卷积核与其进行卷积操作
 x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
 x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
