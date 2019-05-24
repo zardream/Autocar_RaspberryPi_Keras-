@@ -46,7 +46,10 @@ model.fit(x_train, y_train,
 	verbose=1,		#是否显示训练的时候日志信息
 	validation_data=(x_test,y_test))	#用来验证的数据集
 
-
+#评估神经网络模型
+score = model.evaluate(x_test, y_test, verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
 #reshape来自numpy，下面部分是为了转换数据类型并改变纬度，最后一个1是为了方便卷积核与其进行卷积操作
 x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
 x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
