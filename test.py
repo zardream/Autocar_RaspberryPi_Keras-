@@ -1,6 +1,7 @@
 from keras.datasets import mnist
 import matplotlib.pyplot as plt 
 import numpy as np 
+import keras
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
@@ -16,7 +17,12 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255
 
-
 print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
 print(x_test.shape[0], 'test samples')
+
+#将标签数据转换成为二进制数组
+num_classes = 10
+y_train = keras.utils.to_categorical(y_train, num_classes)
+y_test = keras.utils.to_categorical(y_test, num_classes)
+print(y_test[5], 'result')
